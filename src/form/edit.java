@@ -55,14 +55,15 @@ public class edit extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         txtnokamar = new javax.swing.JTextField();
-        txtstatus = new javax.swing.JTextField();
         txtnama = new javax.swing.JTextField();
         txtalamat = new javax.swing.JTextField();
         txtnohp = new javax.swing.JTextField();
         txtdurasi = new javax.swing.JTextField();
+        txtstatus = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 153, 153));
+        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(0, 153, 153));
 
@@ -153,12 +154,6 @@ public class edit extends javax.swing.JFrame {
             }
         });
 
-        txtstatus.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtstatusActionPerformed(evt);
-            }
-        });
-
         txtalamat.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtalamatActionPerformed(evt);
@@ -168,6 +163,13 @@ public class edit extends javax.swing.JFrame {
         txtdurasi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtdurasiActionPerformed(evt);
+            }
+        });
+
+        txtstatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Terisi", "Kosong" }));
+        txtstatus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtstatusActionPerformed(evt);
             }
         });
 
@@ -208,15 +210,15 @@ public class edit extends javax.swing.JFrame {
                             .addComponent(jLabel4))
                         .addGap(42, 42, 42)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtstatus, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
-                            .addComponent(txtnokamar)))
+                            .addComponent(txtnokamar, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
+                            .addComponent(txtstatus, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btntambah, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnhapus, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(139, 139, 139)
                         .addComponent(btnedit, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(53, 53, 53))
+                .addContainerGap(83, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -272,9 +274,8 @@ public class edit extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 833, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 839, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -288,7 +289,7 @@ public class edit extends javax.swing.JFrame {
             PreparedStatement pst = conn.prepareStatement(sql);
 
             pst.setInt(1, Integer.parseInt(txtnokamar.getText()));
-            pst.setString(2, txtstatus.getText());
+            pst.setString(2, txtstatus.getSelectedItem().toString());
             pst.setString(3, txtnama.getText());
             pst.setString(4, txtalamat.getText());
             pst.setInt(5, Integer.parseInt(txtnohp.getText()));
@@ -341,18 +342,14 @@ public class edit extends javax.swing.JFrame {
     }//GEN-LAST:event_btnhapusActionPerformed
     
     private void btnhomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnhomeActionPerformed
-                                  
-        new utama().setVisible(true);   // buka halaman utama
-        this.dispose();                 // tutup halaman edit
+        new utama().setVisible(true); // constructor otomatis memanggil loadData()
+        this.dispose();
+        
     }//GEN-LAST:event_btnhomeActionPerformed
 
     private void txtnokamarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtnokamarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtnokamarActionPerformed
-
-    private void txtstatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtstatusActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtstatusActionPerformed
 
     private void txtalamatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtalamatActionPerformed
         // TODO add your handling code here:
@@ -377,7 +374,7 @@ public class edit extends javax.swing.JFrame {
             String sql = "UPDATE penghuni SET status=?, nama=?, alamat=?, nohp=?, durasi=? WHERE nokamar=?";
             PreparedStatement pst = conn.prepareStatement(sql);
 
-            pst.setString(1, txtstatus.getText());
+            pst.setString(1, txtstatus.getSelectedItem().toString());
             pst.setString(2, txtnama.getText());
             pst.setString(3, txtalamat.getText());
             pst.setInt(4, Integer.parseInt(txtnohp.getText()));
@@ -395,6 +392,10 @@ public class edit extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Gagal update data: " + e.getMessage());
         }
     }//GEN-LAST:event_btneditActionPerformed
+
+    private void txtstatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtstatusActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtstatusActionPerformed
     private void klikTabel() {
         tabelpenghuni.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
@@ -402,7 +403,7 @@ public class edit extends javax.swing.JFrame {
                 int row = tabelpenghuni.getSelectedRow();
                 if (row != -1) {
                     txtnokamar.setText(tabelpenghuni.getValueAt(row, 0).toString());
-                    txtstatus.setText(tabelpenghuni.getValueAt(row, 1).toString());
+                    txtstatus.setSelectedItem(tabelpenghuni.getValueAt(row, 1).toString());
                     txtnama.setText(tabelpenghuni.getValueAt(row, 2).toString());
                     txtalamat.setText(tabelpenghuni.getValueAt(row, 3).toString());
                     txtnohp.setText(tabelpenghuni.getValueAt(row, 4).toString());
@@ -414,7 +415,7 @@ public class edit extends javax.swing.JFrame {
     
     private void clearField() {
         txtnokamar.setText("");
-        txtstatus.setText("");
+        txtstatus.setSelectedItem("terisi");
         txtnama.setText("");
         txtalamat.setText("");
         txtnohp.setText("");
@@ -500,6 +501,6 @@ public class edit extends javax.swing.JFrame {
     private javax.swing.JTextField txtnama;
     private javax.swing.JTextField txtnohp;
     private javax.swing.JTextField txtnokamar;
-    private javax.swing.JTextField txtstatus;
+    private javax.swing.JComboBox<String> txtstatus;
     // End of variables declaration//GEN-END:variables
 }

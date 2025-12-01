@@ -27,4 +27,8 @@ public class koneksidatabase {
         }
         return conn;
     }
+
+    public static com.sun.jdi.connect.spi.Connection getConnection(String jdbcmysqllocalhostkosratia, String root, String string) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }

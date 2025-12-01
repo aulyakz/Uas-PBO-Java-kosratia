@@ -4,6 +4,14 @@
  */
 package form;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import koneksi.koneksidatabase;
+
 /**
  *
  * @author user
@@ -17,6 +25,12 @@ public class utama extends javax.swing.JFrame {
      */
     public utama() {
         initComponents();
+        // 🚨 BARIS PENTING UNTUK MENGONTROL UKURAN JENDELA 🚨
+        this.setResizable(false); 
+        
+        // Jika Anda juga ingin meletakkan di tengah layar
+        this.setLocationRelativeTo(null); 
+        loadTable();
     }
 
     /**
@@ -35,7 +49,7 @@ public class utama extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        tabelpenghuni = new javax.swing.JTable();
         buttonlogin = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -77,9 +91,9 @@ public class utama extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Berlin Sans FB", 0, 36)); // NOI18N
         jLabel2.setText("\"Kos Ratia\"");
 
-        jTable2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jTable2.setFont(new java.awt.Font("Ebrima", 0, 12)); // NOI18N
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tabelpenghuni.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        tabelpenghuni.setFont(new java.awt.Font("Ebrima", 0, 12)); // NOI18N
+        tabelpenghuni.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
                 {null, null},
@@ -104,7 +118,7 @@ public class utama extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(jTable2);
+        jScrollPane2.setViewportView(tabelpenghuni);
 
         buttonlogin.setBackground(new java.awt.Color(255, 204, 0));
         buttonlogin.setFont(new java.awt.Font("Verdana", 2, 12)); // NOI18N
@@ -194,6 +208,29 @@ public class utama extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_buttonloginMouseClicked
 
+    private void loadTable() {
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("No Kamar");
+        model.addColumn("Status");
+
+        try {
+            Connection conn = koneksidatabase.getKoneksi();
+            Statement st = conn.createStatement();
+            ResultSet rs = st.executeQuery("SELECT * FROM penghuni");
+
+            while (rs.next()) {
+                model.addRow(new Object[]{
+                    rs.getInt("nokamar"),
+                    rs.getString("status"),
+                });
+            }
+
+            tabelpenghuni.setModel(model);
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Gagal load tabel: " + e.getMessage());
+        }
+    }
     /**
      * @param args the command line arguments
      */
@@ -230,6 +267,9 @@ public class utama extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
+    private javax.swing.JTable tabelpenghuni;
     // End of variables declaration//GEN-END:variables
-}
+
+
+    }
+
