@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 29 Nov 2025 pada 17.02
+-- Waktu pembuatan: 01 Des 2025 pada 13.23
 -- Versi server: 10.4.32-MariaDB
 -- Versi PHP: 8.2.12
 
@@ -48,7 +48,7 @@ INSERT INTO `pemilik` (`username`, `password`) VALUES
 
 CREATE TABLE `penghuni` (
   `nokamar` int(10) NOT NULL,
-  `status` varchar(30) NOT NULL,
+  `status` varchar(100) NOT NULL,
   `nama` varchar(50) NOT NULL,
   `alamat` varchar(100) NOT NULL,
   `nohp` int(20) NOT NULL,
@@ -60,7 +60,11 @@ CREATE TABLE `penghuni` (
 --
 
 INSERT INTO `penghuni` (`nokamar`, `status`, `nama`, `alamat`, `nohp`, `durasi`) VALUES
-(1, 'terisi', 'aulya', 'padang pariaman', 12345678, 90);
+(1, 'terisi', 'aulya', 'padang pariaman', 12345678, 90),
+(2, 'Kosong', '-', '-', 0, 0),
+(3, 'Terisi', 'asa', 'malay', 8766454, 90),
+(4, 'Terisi', 'bayu', 'padang', 8654, 60),
+(5, 'Kosong', '-', '-', 0, 0);
 
 --
 -- Indexes for dumped tables
